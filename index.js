@@ -56,7 +56,12 @@ const logger = Object.freeze({
         logStream.write(error + "\n", "utf8");
         callback(error);
     },
-    'debug': (...data) => debugStream.write(data.join(" ") + "\n", "utf8")
+    'debug': (...data) => {
+        const callback = (typeof data[data.length - 1] === "function") ? data.pop() : () => {};
+        const debug = data.join(" ");
+        debugStream.write(debug + "\n", "utf8");
+        callback(debug);
+    }
 });
 let then = new Date();
 then.setHours(0, 0, 0, 0);
