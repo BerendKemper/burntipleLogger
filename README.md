@@ -2,7 +2,7 @@
 Node JS every day a new log file and error file
 
 <pre>
-<code>// Examples
+<code>// Example
 const logger = require("logger");
 
 const http = require("http");
