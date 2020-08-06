@@ -16,7 +16,7 @@ const socketHelper = new EventEmitter();
 /*
 Syntax: logger.log(...data[, callback]) 
         logger.error(...data[, callback])
-callback is optional, takes in one parameter:   logString
+callback is optional, takes in one parameter:   logString => { /* whatever you do with it*/ }
 //*/
 
 logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("returnLogger", logString));
