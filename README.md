@@ -27,6 +27,5 @@ io.on("connect", socket => {
     socket.on("disconnect", reason => {
         socketHelper.removeListener("returnLogger", emitReturnLogger);
     });
-});
-</code>
+});</code>
 </pre>
