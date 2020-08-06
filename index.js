@@ -36,7 +36,7 @@ let debugStream;
 const logger = Object.freeze({
     'log': (...data) => {
         const callback = (typeof data[data.length - 1] === "function") ? data.pop() : () => {};
-        const logStr = dateISOString.toOffset(new Date(), true) + spaces(4) + pretify(...data);
+        const logStr = localTimeZoneDate.toISOString(new Date(), true) + spaces(4) + pretify(...data);
         console.log(logStr);
         logStream.write(logStr + "\n", "utf8");
         callback(logStr);
@@ -50,7 +50,7 @@ const logger = Object.freeze({
     },
     'error': (...data) => {
         const callback = (typeof data[data.length - 1] === "function") ? data.pop() : () => {};
-        const error = dateISOString.toOffset(new Date(), true) + spaces(4) + pretify(...data);
+        const error = localTimeZoneDate.toISOString(new Date(), true) + spaces(4) + pretify(...data);
         console.log(error);
         errorStream.write(error + "\n", "utf8");
         logStream.write(error + "\n", "utf8");
