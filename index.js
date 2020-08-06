@@ -10,6 +10,7 @@ const localTimeZoneDate = function loadLocalTimeZoneDate() {
         'toISOString': (date, ms = true) => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate()) + "T" +
             pad2(date.getHours()) + ":" + pad2(date.getMinutes()) + ":" + pad2(date.getSeconds()) +
             (ms === true ? "." + pad3(date.getMilliseconds()) : "") + getUTCOffset(date).hhmm,
+        'yyyymmdd': date => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate())
     });
 }();
 
@@ -20,15 +21,15 @@ const spaces = (number = 0, string = "") => {
     return spaces;
 };
 const pretify = (...data) => {
-    let logStr = "";
-    for (let str of data) {
-        str = String(str);
+    let logString = "";
+    for (let string of data) {
+        string = String(string);
         let length = 10;
-        while (length < str.length + 4)
+        while (length < string.length + 4)
             length += 5;
-        logStr += str + spaces(length, str);
+        logString += string + spaces(length, string);
     }
-    return logStr;
+    return logString;
 };
 let logStream;
 let errorStream;
@@ -69,10 +70,10 @@ then.setHours(0, 0, 0, 0);
     const now = new Date();
     setTimeout(() => nextTick(), (then - now) * 0.99);
     if (now >= then) {
-        const dateStr = yyyymmdd.toString(now);
-        logStream = _fs.createWriteStream("./log/" + dateStr + ".log", { flags: "a+" });
-        errorStream = _fs.createWriteStream("./log/error/" + dateStr + ".log", { flags: "a+" });
-        testStream = _fs.createWriteStream("./log/debug/" + dateStr + ".log", {flags: "a+" });
+        const dateString = localTimeZoneDate.yyyymmdd(now);
+        logStream = _fs.createWriteStream("./log/" + dateString + ".log", { flags: "a+" });
+        errorStream = _fs.createWriteStream("./log/error/" + dateString + ".log", { flags: "a+" });
+        debugStream = _fs.createWriteStream("./log/debug/" + dateString + ".log", {flags: "a+" });
         then.setHours(then.getHours() + 24, 0, 0, 0);
     }
     logger.log("logger tick");
