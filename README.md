@@ -15,7 +15,8 @@ const socketHelper = new EventEmitter();
 
 // Syntax: logger.log(...data, callback)
 //         logger.error(...data, callback)
-logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("returnLogger", logString)); // loggs "testing logger      1    2     true      false"    
+logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("returnLogger", logString));
+// loggs "testing logger      1    2     true      false"    
 
 io.on("connect", socket => {
     //...
