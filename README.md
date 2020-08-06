@@ -13,9 +13,11 @@ const io = require('socket.io')(server);
 const EventEmitter = require("events");
 const socketHelper = new EventEmitter();
 
-// Syntax: logger.log(...data[, callback]) 
-//         logger.error(...data[, callback])
-// callback is optional
+/*
+Syntax: logger.log(...data[, callback]) 
+        logger.error(...data[, callback])
+callback is optional, takes in one parameter:   logString
+//*/
 
 logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("returnLogger", logString));
 // loggs "2020-08-06T15:00:09.884+0200    testing logger      1    2     true      false"    
@@ -23,7 +25,7 @@ logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("
 io.on("connect", socket => {
     //...
     
-    // can also use callback to show the logString to the front-end
+    // can also use callback to show the logString in the front-end
     const emitReturnLogger = logString => socket.emit("returnLogger", logString);
     socketHelper.on("returnLogger", logString => emitReturnLogger(logString));
     
