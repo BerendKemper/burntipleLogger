@@ -13,7 +13,6 @@ const localTimeZoneDate = function loadLocalTimeZoneDate() {
         'yyyymmdd': date => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate())
     });
 }();
-
 const spaces = (number = 0, string = "") => {
     let spaces = "";
     for (let i = 0; i < number - string.length; i++)
