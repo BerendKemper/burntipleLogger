@@ -24,11 +24,10 @@ logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("
 
 io.on("connect", socket => {
     // ...
+    // You could use the callback to show the logString in the front-end
     
-    // can also use callback to show the logString in the front-end
     const emitReturnLogger = logString => socket.emit("returnLogger", logString);
     socketHelper.on("returnLogger", logString => emitReturnLogger(logString));
-    
     socket.on("disconnect", reason => {
         socketHelper.removeListener("returnLogger", emitReturnLogger);
     });
