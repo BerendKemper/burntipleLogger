@@ -7,8 +7,8 @@ const localTimeZoneDate = function loadLocalTimeZoneDate() {
         return { hhmm: "+" + pad2(hour) + "00", hour };
     };
     return Object.freeze({
-        'toISOString': (date, ms = true) => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate()) + "T" +
-            pad2(date.getHours()) + ":" + pad2(date.getMinutes()) + ":" + pad2(date.getSeconds()) +
+        'toISOString': (date, ms = true) => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate()) + 
+            "T" + pad2(date.getHours()) + ":" + pad2(date.getMinutes()) + ":" + pad2(date.getSeconds()) +
             (ms === true ? "." + pad3(date.getMilliseconds()) : "") + getUTCOffset(date).hhmm,
         'yyyymmdd': date => pad2(date.getFullYear()) + "-" + pad2(date.getMonth() + 1) + "-" + pad2(date.getDate())
     });
