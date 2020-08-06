@@ -13,8 +13,10 @@ const io = require('socket.io')(server);
 const EventEmitter = require("events");
 const socketHelper = new EventEmitter();
 
-// Syntax: logger.log(...data, callback)
-//         logger.error(...data, callback)
+// Syntax: logger.log(...data[, callback]) 
+//         logger.error(...data[, callback])
+// callback is optional
+
 logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("returnLogger", logString));
 // loggs "testing logger      1    2     true      false"    
 
