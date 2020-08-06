@@ -21,7 +21,8 @@ const spaces = (number = 0, string = "") => {
 };
 const pretify = (...data) => {
     let logStr = "";
-    for (const str of data) {
+    for (let str of data) {
+        str = String(str);
         let length = 10;
         while (length < str.length + 4)
             length += 5;
