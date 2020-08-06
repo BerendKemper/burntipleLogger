@@ -23,7 +23,7 @@ logger.log("testing logger", 1, 2, true, false, logString => socketHelper.emit("
 // logs "2020-08-06T15:00:09.884+0200    testing logger      1    2     true      false"    
 
 io.on("connect", socket => {
-    //...
+    // ...
     
     // can also use callback to show the logString in the front-end
     const emitReturnLogger = logString => socket.emit("returnLogger", logString);
