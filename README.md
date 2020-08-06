@@ -1,5 +1,5 @@
 # logger
-node js every day a new log file, error file
+node js every day a new log file and error file
 
 <pre>
 <code>// Examples
