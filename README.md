@@ -1,4 +1,4 @@
-# logger
+# loggerBurnitant
 Node JS every day a new log file and error file
 
 <pre>
