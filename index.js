@@ -71,4 +71,4 @@ then.setHours(0, 0, 0, 0);
     }
     logger.log("logger tick");
 }());
-module.exports.logger = logger;
+module.exports = logger;
