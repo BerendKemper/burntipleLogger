@@ -1,9 +1,9 @@
-# burntipleLogger
+# multiple-logger
 Node JS every day a new log file and error file
 
 <pre>
 <code>// Example
-const logger = require("logger");
+const logger = require("multiple-logger"); // WARNING not published yet
 
 const http = require("http");
 const server = http.createServer();
