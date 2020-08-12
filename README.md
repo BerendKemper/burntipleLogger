@@ -1,5 +1,5 @@
 # monkey-logger
-Node JS every day a new log file and error file
+A logger that creates the log-dir and can change the log-name
 
 <pre><code>npm i monkey-logger // WARNING not published yet
 
