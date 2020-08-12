@@ -17,7 +17,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
             <li><code>...data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values">&lt;primitives&gt;</a></li>
         </ul>
     </ul>
-    <li>Returns logger[type] <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
+    <li>Returns <code>logger[type]</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
 </ul>
 
 <h3>logger</h3>
