@@ -37,7 +37,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
 
 <h3>Logger.delete(type)</h3>
 <ul>
-    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>log</code></li>\
+    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>log</code></li>
 </ul>
 <pre><code>new Logger("test", { name: "tester" }).then(() => {
     // output: ./loggers/test/tester.log
