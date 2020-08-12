@@ -64,7 +64,10 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     await new Logger("error", { formatter: (...data) => 
         tabs5_4.tabify(localeTimezoneDate.toISOString(new Date()), ...data) });
     // ...
-    new TaskClock({ start: new Date(new Date().setHours(0, 0, 0, 0)), interval: { h: 24 } }, (tick, now) => {
+    new TaskClock({ 
+        start: new Date(new Date().setHours(0, 0, 0, 0)), 
+        interval: { h: 24 }
+    }, (tick, now) => {
         const yyyymmdd = dateNotation.yyyymmdd(now)
         logger.log.setName(yyyymmdd);
         logger.error.setName(yyyymmdd);
