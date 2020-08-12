@@ -58,12 +58,10 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     const TaskClock = require("task-clock");
     // ...
     const tabs5_4 = new IndentModel({ spaces: 5, spaced: 4 });
-    // ...
-    await new Logger("log", { formatter: (...data) => 
-        tabs5_4.tabify(localeTimezoneDate.toISOString(new Date()), ...data) });
-    await new Logger("error", { formatter: (...data) => 
-        tabs5_4.tabify(localeTimezoneDate.toISOString(new Date()), ...data) });
-    // ...
+    await new Logger("log", { name: dateNotation.yyyymmdd(new Date()), formatter: 
+        (...data) => tabs5_4.tabify(localeTimezoneDate.toISOString(new Date()), ...data) });
+    await new Logger("error", { name: dateNotation.yyyymmdd(new Date()), formatter: 
+        (...data) => tabs5_4.tabify(localeTimezoneDate.toISOString(new Date()), ...data) });
     new TaskClock({ 
         start: new Date(new Date().setHours(0, 0, 0, 0)), 
         interval: { h: 24 }
