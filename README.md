@@ -20,7 +20,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     <li>Returns <code>logger[type]</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
 </ul>
 
-<h3>logger</h3>
+<h3>logger[type]</h3>
 <pre><code>(async function loadApplication() {
     await new Logger("log");
     // output: ./loggers/log/monkey.log
