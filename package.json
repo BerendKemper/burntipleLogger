@@ -1,0 +1,21 @@
+{
+    "name": "monkey-logger",
+    "version": "0.0.0",
+    "description": "A logger that creates the log-dir and can change the log-name",
+    "main": "index.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BerendKemper/monkey-logger.git"
+    },
+    "keywords": [],
+    "author": {
+        "name": "Berend Kemper",
+        "email": "berend_kemper@hotmail.com"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/BerendKemper/monkey-logger/issues"
+    },
+    "homepage": "https://github.com/BerendKemper/monkey-logger#readme"
+}
