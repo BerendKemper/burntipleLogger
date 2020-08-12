@@ -72,9 +72,9 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
         logger.log.setName(yyyymmdd);
         logger.error.setName(yyyymmdd);
     });
+    // ...
     logger.log("GET", "/v1/someapi/mongol", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol", "spider", "monkey");
-    // ...
     // 2020-08-12T23:59:56.496+0200       GET       /v1/someapi/mongol       spider    monkey
     // 2020-08-12T23:59:56.497+0200       CLOSED    /v1/someapi/mongol       spider    monkey
 }());
