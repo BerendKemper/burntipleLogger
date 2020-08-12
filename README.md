@@ -1,5 +1,5 @@
 # monkey-logger
-A logger that creates the log-dir and can change the log-name
+A logger that creates a log-dir and can change the logger filename
 
 <pre><code>npm i monkey-logger // WARNING not published yet
 

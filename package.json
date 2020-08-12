@@ -1,7 +1,7 @@
 {
     "name": "monkey-logger",
     "version": "1.0.0",
-    "description": "A logger that creates the log-dir and can change the log-name",
+    "description": "A logger that creates a log-dir and can change the logger filename",
     "main": "index.js",
     "scripts": {},
     "repository": {
