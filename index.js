@@ -4,14 +4,13 @@ const fs = require("fs");
 const _logger = {};
 const logger = {};
 class Logger {
-    /**
-     * creates logger[type] 
-     * @param {String} type 
+    /**Creates logger[type]
+     * @param {String} type
      * @param {Object} options 
-     * @param {String} options.dir Default: loggers
-     * @param {String} options.name Default: monkey
-     * @param {Function} options.formatter Default: (data, callback) => callback(data.join(" "))
-     */
+     * @param {String} options.dir
+     * @param {String} options.name
+     * @param {Function} options.formatter
+     * @returns logger[type].log*/
     constructor(type, options = {}) {
         return new Promise((resolve, reject) => {
             let { dir = "loggers", name = "monkey", formatter = (data, callback) => callback(data.join(" ")) } = options;
@@ -34,6 +33,8 @@ class Logger {
             });
         });
     }
+    /**Deletes Logger[type] from logger
+     * @param {String} type */
     static delete(type) {
         if (_logger[type] instanceof Logger === true)
             delete (_logger[type]);

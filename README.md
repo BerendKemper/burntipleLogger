@@ -1,41 +1,18 @@
 # monkey-logger
 A logger that creates a log-dir and can change the logger filename, the formatter to be callbacked
-
 <pre><code>npm i monkey-logger // WARNING not published yet
 
 const { Logger, logger } = require("monkey-logger");</code></pre>
-
-<h3>new Logger(type[,options])</h3>
+<h3>Table of Contents</h3>
 <ul>
-    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
-    <li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a></li>
+    <li><a href="https://github.com/BerendKemper/task-clock#class-taskclock">Class: TaskClock</a></li>
     <ul>
-        <li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>loggers</code></li>
-        <li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>monkey</code></li>
-        <li><code>formatter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
-        <ul>
-            <li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">&lt;Array&gt;</a></li>
-            <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Required!</li>
-        </ul>
+        <li><a href="https://github.com/BerendKemper/task-clock#taskclockclose">taskClock.close()</a></li>
+        <li><a href="https://github.com/BerendKemper/task-clock#new-taskclockoptionstask">new TaskClock([options][,task])</a></li>
     </ul>
-    <li>Returns <code>logger[type]</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
+    <li><a href="https://github.com/BerendKemper/task-clock#examples">Examples</a></li>
 </ul>
-
-<h3>logger[type]</h3>
-<pre><code>(async function loadApplication() {
-    await new Logger("log");
-    // output: ./loggers/log/monkey.log
-    await new Logger("error");
-    // output: ./loggers/error/monkey.log
-    console.log(logger);
-    // {
-    //     log: [Function] { setName: [Function] },
-    //     error: [Function] { setName: [Function] }
-    // }
-}());</code></pre>
-
-<h3>Class Logger</h3>
-
+<h2>Class Logger</h2>
 <h3>Logger.delete(type)</h3>
 <ul>
     <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>log</code></li>
@@ -50,8 +27,34 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     console.log(logger); 
     // { }
 });</code></pre>
-
-<h3>Examples</h3>
+<h3>new Logger(type[,options])</h3>
+<ul>
+    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
+    <li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a></li>
+    <ul>
+        <li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>loggers</code></li>
+        <li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>monkey</code></li>
+        <li><code>formatter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Default: <code>(data, callback) => callback(data.join(" "))</code></li>
+        <ul>
+            <li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">&lt;Array&gt;</a></li>
+            <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Required!</li>
+        </ul>
+    </ul>
+    <li>Returns <code>logger[type].log</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
+</ul>
+<h2>logger[type]</h2>
+<pre><code>(async function loadApplication() {
+    await new Logger("log");
+    // output: ./loggers/log/monkey.log
+    await new Logger("error");
+    // output: ./loggers/error/monkey.log
+    console.log(logger);
+    // {
+    //     log: [Function] { setName: [Function] },
+    //     error: [Function] { setName: [Function] }
+    // }
+}());</code></pre>
+<h2>Examples</h2>
 <pre><code>(async function loadApplication() {
     const { Logger, logger } = require("monkey-logger");
     const { localeTimezoneDate, dateNotation, utc0 } = require("locale-timezone-date");
