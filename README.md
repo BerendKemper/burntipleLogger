@@ -1,5 +1,5 @@
 # monkey-logger
-A logger that creates a log-dir and can change the logger filename, the formatter to be callbacked
+A logger that creates a log-dir and can change the logger filename, allows formatter and extending.
 <pre><code>npm i monkey-logger // WARNING not published yet
 
 const { Logger, logger } = require("monkey-logger");</code></pre>
@@ -21,7 +21,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // output: ./loggers/test/tester.log
     console.log(logger); 
     // {
-    //     test: (...data) => [Function] { setName: [Function] }
+    //     test: (...data) => [Function: log] { setName: [Function] }
     // }
     Logger.delete("test");
     console.log(logger); 
@@ -42,6 +42,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     </ul>
     <li>Returns <code>logger[type].log</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
 </ul>
+The <code>dir</code> option allows the developer to specify in which main-branch the logger will document it's log file(s). The <code>type</code> option  allows the developer to specify in which sub-branch the logger will document it's log file(s). It also determines how you can access the log function from the logger Object. The <code>name</code> option allows the developer to specify  how the log file will be named. Change the name by <code>logger[type].setName(newName)</code> and a new log file will be created in the sub branch. This opens the possibility to create a new log file on a clock's tick event, or anything else. The <code>formatter</code> is a function that allows the developer to manipulate the log string into desired format, the function's second parameter <code>callback</code> must be used to pass through the self-formatted string. The <code>extend</code> option allows the developer to extend a logger[type2] with a logger[type1] so that logger[type2] will also log it's data to the log file from logger[type1]. Checkout out the examples below to see how multiple modules with callbacks can be chained in a formatter function and to see how logger.error is extended from logger.log. 
 <h2>logger[type]</h2>
 <pre><code>(async function loadApplication() {
     await new Logger("log");
@@ -50,8 +51,8 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // output: ./loggers/error/monkey.log
     console.log(logger);
     // {
-    //     log: [Function] { setName: [Function] },
-    //     error: [Function] { setName: [Function] }
+    //     log: [Function: log] { setName: [Function] },
+    //     error: [Function: log] { setName: [Function] }
     // }
 }());</code></pre>
 <h2>Examples</h2>
@@ -63,7 +64,10 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // ...
     const tabs5_4 = new IndentModel({ spaces: 5, spaced: 4 });
     const formatter = (data, callback) => localeTimezoneDate.toISOString(new Date(),
-        isoStr => tabs5_4.tabify(isoStr, ...data, logString => callback(logString)));
+        isoStr => tabs5_4.tabify(isoStr, ...data, logString => {
+            callback(logString);
+            console.log(logString);
+        }));
     // ...
     await new Logger("log", { name: dateNotation.yyyymmdd(new Date()), formatter });
     await new Logger("error", { name: dateNotation.yyyymmdd(new Date()), formatter });

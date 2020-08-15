@@ -1,7 +1,7 @@
 "use strict";
 const path = require("path");
 const fs = require("fs");
-const _logger = {};
+const instance = new WeakMap();
 const logger = {};
 class Logger {
     /**Creates logger[type]
@@ -10,21 +10,35 @@ class Logger {
      * @param {String} options.dir
      * @param {String} options.name
      * @param {Function} options.formatter
+     * @param {Array} options.extend
      * @returns logger[type].log*/
     constructor(type, options = {}) {
         return new Promise((resolve, reject) => {
-            let { dir = "loggers", name = "monkey", formatter = (data, callback) => callback(data.join(" ")) } = options;
+            let { dir = "loggers", name = "monkey", formatter = (data, callback) => callback(data.join(" ")), extend = [] } = options;
             this.dirpath = path.join(dir, type);
             fs.mkdir(this.dirpath, { recursive: true }, err => {
+                const extendedWritables = extend.map(loggerType => instance.get(loggerType).writable);
                 this.filepath = path.join(this.dirpath, name + ".log");
-                this.stream = fs.createWriteStream(this.filepath, { flags: "a+" });
-                const log = (...data) => formatter(data, logString => this.stream.write(logString + "\n", "utf8"));
+                let writable = this.writable = fs.createWriteStream(this.filepath, { flags: "a+" });
+                let chain = writable.chain = [new Promise((resolve, reject) => resolve("first"))];
+                const log = (...data) => formatter(data, formatted => {
+                    const logBuffer = Buffer.from(formatted + "\n",);
+                    chain.push(new Promise((resolve, reject) => chain[0].then(() => {
+                        chain.shift(writable.write(logBuffer, () => resolve()));
+                    })));
+                    for (const xWritable of extendedWritables)
+                        xWritable.chain.push(new Promise((resolve, reject) => xWritable.chain[0].then(() => {
+                            xWritable.chain.shift(xWritable.write(logBuffer, () => resolve()));
+                        })));
+                });
+                log.filepath = this.filepath;
                 log.setName = name => {
-                    this.filepath = path.join(this.dirpath, name + ".log");
-                    this.stream = fs.createWriteStream(this.filepath, { flags: "a+" });
+                    log.filepath = this.filepath = path.join(this.dirpath, name + ".log");
+                    writable = this.writable = fs.createWriteStream(this.filepath, { flags: "a+" });
+                    chain = writable.chain = Array.from(chain);
                 };
-                if (_logger[type] instanceof Logger === false) {
-                    _logger[type] = this;
+                if (instance.get(log) instanceof Logger === false) {
+                    instance.set(log, this);
                     logger[type] = log;
                 }
                 else
@@ -32,13 +46,6 @@ class Logger {
                 resolve(log);
             });
         });
-    }
-    /**Deletes Logger[type] from logger
-     * @param {String} type */
-    static delete(type) {
-        if (_logger[type] instanceof Logger === true)
-            delete (_logger[type]);
-        delete (logger[type]);
     }
 };
 module.exports = Object.freeze({ Logger, logger });
