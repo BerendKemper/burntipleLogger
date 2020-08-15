@@ -5,28 +5,14 @@ A logger that creates a log-dir and can change the logger filename, allows forma
 const { Logger, logger } = require("monkey-logger");</code></pre>
 <h3>Table of Contents</h3>
 <ul>
-    <li><a href="https://github.com/BerendKemper/task-clock#class-taskclock">Class: TaskClock</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#class-logger">Class Logger</a></li>
     <ul>
-        <li><a href="https://github.com/BerendKemper/task-clock#taskclockclose">taskClock.close()</a></li>
-        <li><a href="https://github.com/BerendKemper/task-clock#new-taskclockoptionstask">new TaskClock([options][,task])</a></li>
+        <li><a href="https://github.com/BerendKemper/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
-    <li><a href="https://github.com/BerendKemper/task-clock#examples">Examples</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#loggertype">logger[type]</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#examples">Example</a></li>
 </ul>
 <h2>Class Logger</h2>
-<h3>Logger.delete(type)</h3>
-<ul>
-    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>log</code></li>
-</ul>
-<pre><code>new Logger("test", { name: "tester" }).then(() => {
-    // output: ./loggers/test/tester.log
-    console.log(logger); 
-    // {
-    //     test: (...data) => [Function: log] { setName: [Function] }
-    // }
-    Logger.delete("test");
-    console.log(logger); 
-    // { }
-});</code></pre>
 <h3>new Logger(type[,options])</h3>
 <ul>
     <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
@@ -42,7 +28,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     </ul>
     <li>Returns <code>logger[type].log</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
 </ul>
-The <code>dir</code> option allows the developer to specify in which main-branch the logger will document it's log file(s). The <code>type</code> option  allows the developer to specify in which sub-branch the logger will document it's log file(s). It also determines how you can access the log function from the logger Object. The <code>name</code> option allows the developer to specify  how the log file will be named. Change the name by <code>logger[type].setName(newName)</code> and a new log file will be created in the sub branch. This opens the possibility to create a new log file on a clock's tick event, or anything else. The <code>formatter</code> is a function that allows the developer to manipulate the log string into desired format, the function's second parameter <code>callback</code> must be used to pass through the self-formatted string. The <code>extend</code> option allows the developer to extend a logger[type2] with a logger[type1] so that logger[type2] will also log it's data to the log file from logger[type1]. Checkout out the examples below to see how multiple modules with callbacks can be chained in a formatter function and to see how logger.error is extended from logger.log. 
+The <code>dir</code> option allows the developer to specify in which main-branch the logger will document it's log file(s). The <code>type</code> option  allows the developer to specify in which sub-branch the logger will document it's log file(s). It also determines how you can access the log function from the logger Object. The <code>name</code> option allows the developer to specify  how the log file will be named. Change the name by <code>logger[type].setName(newName)</code> and a new log file will be created in the sub branch. This opens the possibility to create a new log file on a clock's tick event, or anything else. The <code>formatter</code> is a function that allows the developer to manipulate the log string into desired format, the function's second parameter <code>callback</code> must be used to pass through the self-formatted string. The <code>extend</code> option allows the developer to extend a logger[type2] with a logger[type1] so that logger[type2] will also log it's data to the log file from logger[type1]. Checkout out the example below to see how multiple modules with callbacks can be chained in a formatter function and to see how logger.error is extended from logger.log. 
 <h2>logger[type]</h2>
 <pre><code>(async function loadApplication() {
     await new Logger("log");
@@ -55,7 +41,7 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     //     error: [Function: log] { setName: [Function] }
     // }
 }());</code></pre>
-<h2>Examples</h2>
+<h2>Example</h2>
 <pre><code>(async function loadApplication() {
     const { Logger, logger } = require("monkey-logger");
     const { localeTimezoneDate, dateNotation, utc0 } = require("locale-timezone-date");
