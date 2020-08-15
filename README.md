@@ -66,7 +66,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     await new Logger("error", { name: dateNotation.yyyymmdd(new Date()), formatter });
     // ...
     new TaskClock({ start: new Date(new Date().setHours(0, 0, 0, 0)),  interval: { h: 24 } }, 
-    (tick, now) => {
+    now => {
         const yyyymmdd = dateNotation.yyyymmdd(now)
         logger.log.setName(yyyymmdd);
         logger.error.setName(yyyymmdd);
