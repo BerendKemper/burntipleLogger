@@ -56,17 +56,27 @@ The <code>dir</code> option allows the developer to specify in which main-branch
         }));
     // ...
     await new Logger("log", { name: dateNotation.yyyymmdd(new Date()), formatter });
-    await new Logger("error", { name: dateNotation.yyyymmdd(new Date()), formatter });
+    await new Logger("error", { name: dateNotation.yyyymmdd(new Date()), formatter, extend: [logger.log] });
     // ...
-    new TaskClock({ start: new Date(new Date().setHours(0, 0, 0, 0)),  interval: { h: 24 } }, 
-    now => {
-        const yyyymmdd = dateNotation.yyyymmdd(now)
-        logger.log.setName(yyyymmdd);
-        logger.error.setName(yyyymmdd);
-    });
+    new TaskClock({ start: new Date(new Date().setHours(0, 0, 0, 0)), interval: { h: 24 } },
+        (now) => {
+            const yyyymmdd = dateNotation.yyyymmdd(now)
+            logger.log.setName(yyyymmdd);
+            logger.error.setName(yyyymmdd);
+        });
     // ...
-    logger.log("GET", "/v1/someapi/mongol", "spider", "monkey");
-    logger.log("CLOSED", "/v1/someapi/mongol", "spider", "monkey");
-    // 2020-08-15T10:07:10.771+0200       GET       /v1/someapi/mongol       spider    monkey
-    // 2020-08-15T10:07:10.781+0200       CLOSED    /v1/someapi/mongol       spider    monkey
+    logger.log("GET", "/v1/someapi/mongol/1", "spider", "monkey");
+    logger.log("CLOSED", "/v1/someapi/mongol/1", "spider", "monkey");
+    logger.error("FAILED", "/v1/someapi/mongol/1", "find errors in " + logger.error.filepath, "monkey!");
+    logger.error("FAILED", "/v1/someapi/mongol/2", "find errors in " + logger.error.filepath, "monkey!");
+    logger.error("FAILED", "/v1/someapi/mongol/3", "find errors in " + logger.error.filepath, "monkey!");
+    logger.log("GET", "/v1/someapi/mongol/2", "spider", "monkey");
+    logger.log("CLOSED", "/v1/someapi/mongol/2", "spider", "monkey");
+    // 2020-08-15T21:26:19.824+0200       GET       /v1/someapi/mongol/1     spider    monkey
+    // 2020-08-15T21:26:19.836+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
+    // 2020-08-15T21:26:19.837+0200       FAILED    /v1/someapi/mongol/1     find errors in loggers\error\2020-08-15.log       monkey!
+    // 2020-08-15T21:26:19.838+0200       FAILED    /v1/someapi/mongol/2     find errors in loggers\error\2020-08-15.log       monkey!
+    // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\2020-08-15.log       monkey!
+    // 2020-08-15T21:26:19.839+0200       GET       /v1/someapi/mongol/2     spider    monkey
+    // 2020-08-15T21:26:19.840+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
 }());</code></pre>
