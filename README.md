@@ -10,7 +10,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
         <li><a href="https://github.com/BerendKemper/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
     <li><a href="https://github.com/BerendKemper/monkey-logger#loggertype">logger[type]</a></li>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#examples">Example</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#example">Example</a></li>
 </ul>
 <h2>Class Logger</h2>
 <h3>new Logger(type[,options])</h3>
