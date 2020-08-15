@@ -1,6 +1,6 @@
 {
     "name": "monkey-logger",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "A logger that creates a log-dir and can change the logger filename, allows formatter and extending",
     "main": "index.js",
     "scripts": {},
