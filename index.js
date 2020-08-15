@@ -10,7 +10,7 @@ class Logger {
      * @param {Object} options 
      * @param {String} options.dir Default: loggers
      * @param {String} options.name Default: monkey
-     * @param {Function} options.formatter Default: data => data.join(" ")
+     * @param {Function} options.formatter Default: (data, callback) => callback(data.join(" "))
      */
     constructor(type, options = {}) {
         return new Promise((resolve, reject) => {

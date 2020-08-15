@@ -1,7 +1,7 @@
 # monkey-logger
-A logger that creates a log-dir and can change the logger filename
+A logger that creates a log-dir and can change the logger filename, the formatter to be callbacked
 
-<pre><code>npm i monkey-logger
+<pre><code>npm i monkey-logger // WARNING not published yet
 
 const { Logger, logger } = require("monkey-logger");</code></pre>
 
@@ -15,7 +15,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
         <li><code>formatter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
         <ul>
             <li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">&lt;Array&gt;</a></li>
-            <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
+            <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Required!</li>
         </ul>
     </ul>
     <li>Returns <code>logger[type]</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
@@ -29,8 +29,8 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // output: ./loggers/error/monkey.log
     console.log(logger);
     // {
-    //     log: [Function: log] { setName: [Function] },
-    //     error: [Function: log] { setName: [Function] }
+    //     log: [Function] { setName: [Function] },
+    //     error: [Function] { setName: [Function] }
     // }
 }());</code></pre>
 
@@ -44,7 +44,7 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // output: ./loggers/test/tester.log
     console.log(logger); 
     // {
-    //     test: (...data) => [Function: log] { setName: [Function] }
+    //     test: (...data) => [Function] { setName: [Function] }
     // }
     Logger.delete("test");
     console.log(logger); 
@@ -74,6 +74,6 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     // ...
     logger.log("GET", "/v1/someapi/mongol", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol", "spider", "monkey");
-    // 2020-08-12T23:59:56.496+0200       GET       /v1/someapi/mongol       spider    monkey
-    // 2020-08-12T23:59:56.497+0200       CLOSED    /v1/someapi/mongol       spider    monkey
+    // 2020-08-15T10:07:10.771+0200       GET       /v1/someapi/mongol       spider    monkey
+    // 2020-08-15T10:07:10.781+0200       CLOSED    /v1/someapi/mongol       spider    monkey
 }());</code></pre>
