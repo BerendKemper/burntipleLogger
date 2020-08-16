@@ -17,23 +17,23 @@ class Logger {
             let { dir = "loggers", name = "monkey", formatter = (data, callback) => callback(data.join(" ")), extend = [] } = options;
             this.dirpath = path.join(dir, type);
             fs.mkdir(this.dirpath, { recursive: true }, err => {
-                const extendedWritables = extend.map(loggerType => {
+                const extended = extend.map(loggerType => {
                     const _this = instance.get(loggerType);
-                    if (_this instanceof Logger) return _this.writable;
+                    if (_this instanceof Logger) return _this;
                     else throw new TypeError("extend may only have Loggers");
                 });
                 this.filepath = path.join(this.dirpath, name + ".log");
                 let writable = this.writable = fs.createWriteStream(this.filepath, { flags: "a+" });
                 this.writable.type = type;
-                let chain = writable.chain = [new Promise((resolve, reject) => resolve("first"))];
+                let chain = writable.chain = [new Promise(resolve => resolve("first"))];
                 const log = (...data) => formatter(data, formatted => {
                     const logBuffer = Buffer.from(formatted + "\n", "utf8");
-                    chain.push(new Promise((resolve, reject) => chain[chain.length - 1].then(() =>
+                    chain.push(new Promise(resolve => chain[chain.length - 1].then(() =>
                         chain.shift(writable.write(logBuffer, () => resolve())))));
-                    for (const xWritable of extendedWritables) {
-                        const xChain = xWritable.chain;
-                        xChain.push(new Promise((resolve, reject) => xChain[xChain.length - 1].then(() =>
-                            xChain.shift(xWritable.write(logBuffer, () => resolve())))));
+                    for (const x of extended) {
+                        const xChain = x.writable.chain;
+                        xChain.push(new Promise(resolve => xChain[xChain.length - 1].then(() =>
+                            xChain.shift(x.writable.write(logBuffer, () => resolve())))));
                     }
                 });
                 log.filepath = this.filepath;
