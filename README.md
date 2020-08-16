@@ -5,12 +5,12 @@ A logger that creates a log-dir and can change the logger filename, allows forma
 const { Logger, logger } = require("monkey-logger");</code></pre>
 <h3>Table of Contents</h3>
 <ul>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#class-logger">Class Logger</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#class-logger">Class Logger</a></li>
     <ul>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#loggertype">logger[type]</a></li>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#example">Example</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
 </ul>
 <h2>Class Logger</h2>
 <h3>new Logger(type[,options])</h3>
@@ -69,9 +69,11 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     logger.log("CLOSED", "/v1/someapi/mongol/1", "spider", "monkey");
     logger.error("FAILED", "/v1/someapi/mongol/1", "find errors in " + logger.error.filepath, "monkey!");
     logger.error("FAILED", "/v1/someapi/mongol/2", "find errors in " + logger.error.filepath, "monkey!");
+    logger.log.setName("test")
     logger.error("FAILED", "/v1/someapi/mongol/3", "find errors in " + logger.error.filepath, "monkey!");
     logger.log("GET", "/v1/someapi/mongol/2", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol/2", "spider", "monkey");
+    // ...
     // 2020-08-15T21:26:19.824+0200       GET       /v1/someapi/mongol/1     spider    monkey
     // 2020-08-15T21:26:19.836+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
     // 2020-08-15T21:26:19.837+0200       FAILED    /v1/someapi/mongol/1     find errors in loggers\error\2020-08-15.log       monkey!
@@ -79,4 +81,12 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\2020-08-15.log       monkey!
     // 2020-08-15T21:26:19.839+0200       GET       /v1/someapi/mongol/2     spider    monkey
     // 2020-08-15T21:26:19.840+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
+    // ...
+    // 1st OUTPUT: /loggers/log/2020-08-16.log
+    // 2nd OUTPUT: /loggers/log/2020-08-16.log
+    // 3rd OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
+    // 4th OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
+    // 5th OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/test.log
+    // 6th OUTPUT: /loggers/log/test.log
+    // 7th OUTPUT: /loggers/log/test.log
 }());</code></pre>
