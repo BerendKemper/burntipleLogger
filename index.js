@@ -24,7 +24,7 @@ class Logger {
                 });
                 this.filepath = path.join(this.dirpath, name + ".log");
                 let writable = this.writable = fs.createWriteStream(this.filepath, { flags: "a+" });
-                let chain = writable.chain = [new Promise(resolve => writable.once("open", () => resolve()))];
+                const chain = writable.chain = [new Promise(resolve => writable.once("open", () => resolve()))];
                 const log = (...data) => formatter(data, formatted => {
                     const logBuffer = Buffer.from(formatted + "\n", "utf8");
                     chain.push(new Promise(resolve => chain[chain.length - 1].then(() =>
@@ -42,11 +42,11 @@ class Logger {
                     chain.push(new Promise(resolve => {
                         const newOpened = new Promise(resolve => newWritable.once("open", () => resolve()));
                         chain[chain.length - 1].then(() => chain.shift(newOpened.then(() =>
-                            resolve(writable = this.writable = newWritable, chain = writable.chain = chain)
+                            resolve(writable = this.writable = newWritable, writable.chain = chain)
                         )));
                     }));
                 };
-                if (instance.get(log) instanceof Logger)
+                if (instance.get(logger[type]) instanceof Logger)
                     reject(Error(type + " Logger already exists"));
                 else {
                     instance.set(log, this);
