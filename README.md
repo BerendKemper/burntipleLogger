@@ -5,12 +5,12 @@ A logger that creates a log-dir and can change the logger filename, allows forma
 const { Logger, logger } = require("monkey-logger");</code></pre>
 <h3>Table of Contents</h3>
 <ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#class-logger">Class Logger</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#class-logger">Class Logger</a></li>
     <ul>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
+        <li><a href="https://github.com/BerendKemper/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#loggertype">logger[type]</a></li>
+    <li><a href="https://github.com/BerendKemper/monkey-logger#example">Example</a></li>
 </ul>
 <h2>Class Logger</h2>
 <h3>new Logger(type[,options])</h3>
