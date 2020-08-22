@@ -9,11 +9,11 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     <ul>
         <li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger</a></li>
     <li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
 </ul>
-<h2>Class Logger</h2>
-<h3>new Logger(type[,options])</h3>
+<h2>Class: <code>Logger</code></h2>
+<h3><code>new Logger(type[,options])</code></h3>
 <ul>
     <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
     <li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a></li>
@@ -29,18 +29,44 @@ const { Logger, logger } = require("monkey-logger");</code></pre>
     <li>Returns <code>logger[type].log</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
 </ul>
 The <code>dir</code> option allows the developer to specify in which main-branch the logger will document it's log file(s). The <code>type</code> option  allows the developer to specify in which sub-branch the logger will document it's log file(s). It also determines how you can access the log function from the logger Object. The <code>name</code> option allows the developer to specify  how the log file will be named. Change the name by <code>logger[type].setName(newName)</code> and a new log file will be created in the sub branch. This opens the possibility to create a new log file on a clock's tick event, or anything else. The <code>formatter</code> is a function that allows the developer to manipulate the log string into desired format, the function's second parameter <code>callback</code> must be used to pass through the self-formatted string. The <code>extend</code> option allows the developer to extend a logger[type2] with a logger[type1] so that logger[type2] will also log it's data to the log file from logger[type1]. Checkout out the example below to see how multiple modules with callbacks can be chained in a formatter function and to see how logger.error is extended from logger.log. 
-<h2>logger[type]</h2>
+<h2><code>logger</code></h2>
 <pre><code>(async function loadApplication() {
     await new Logger("log");
-    // output: ./loggers/log/monkey.log
+    // OUTPUT: ./loggers/log/monkey.log
     await new Logger("error");
-    // output: ./loggers/error/monkey.log
+    // OUTPUT: ./loggers/error/monkey.log
+    // ...
     console.log(logger);
+    // returns:
     // {
-    //     log: [Function: log] { setName: [Function] },
-    //     error: [Function: log] { setName: [Function] }
+    //     log: [Function: log] {
+    //         filepath: 'loggers\\log\\2020-08-22.log',
+    //         once: [Function],
+    //         setName: [Function]
+    //     },
+    //     error: [Function: log] {
+    //         filepath: 'loggers\\error\\2020-08-22.log',
+    //         once: [Function],
+    //         setName: [Function]
+    //     }
     // }
 }());</code></pre>
+<h2><code>logger[type]</code></h2>
+<h3>Event: <code>'ready'</code></h3>
+This event runs the <code>callback</code> as soon as all calls to <code>logger[type](...data)</code>, that have been called before listening to the 'ready' event, have finished writing to the log file.
+<h3><code>logger[type].filepath</code></h3>
+The <code>filepath</code> property is internally created by <a href="https://nodejs.org/dist/latest-v12.x/docs/api/path.html#path_path_join_paths">path.join</a>(<code>dir</code>, <code>type</code>, <code>name</code>). 
+<h3><code>logger[type].once(event, callback)</code></h3>
+<ul>
+    <li><code>event</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
+    <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a></li>
+</ul>
+Adds a one-time <code>callback</code> function for the <code>event</code>.
+<h3><code>logger[type].setName(name)</code></h3>
+<ul>
+    <li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
+</ul>
+This method adds the new <code>name</code> to the <code>filepath</code> property and creates a new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_createwritestream_path_options">fs.createWriteStream</a>. The internal <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> will only be overwritten by the new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> until all previous logs have finished writing. Any logs that have been fired after the <code>setName</code> method was called will only start writing once the new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> is <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_event_ready_1">ready</a>.
 <h2>Example</h2>
 <pre><code>(async function loadApplication() {
     const { Logger, logger } = require("monkey-logger");
@@ -73,6 +99,7 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     logger.error("FAILED", "/v1/someapi/mongol/3", "find errors in " + logger.error.filepath, "monkey!");
     logger.log("GET", "/v1/someapi/mongol/2", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol/2", "spider", "monkey");
+    logger.log.once("ready", () => console.log("done writing..."));
     // ...
     // 2020-08-15T21:26:19.824+0200       GET       /v1/someapi/mongol/1     spider    monkey
     // 2020-08-15T21:26:19.836+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
@@ -81,6 +108,7 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\2020-08-15.log       monkey!
     // 2020-08-15T21:26:19.839+0200       GET       /v1/someapi/mongol/2     spider    monkey
     // 2020-08-15T21:26:19.840+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
+    // done writing...
     // ...
     // 1st OUTPUT: /loggers/log/2020-08-16.log
     // 2nd OUTPUT: /loggers/log/2020-08-16.log
