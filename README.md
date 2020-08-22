@@ -65,7 +65,7 @@ The <code>dir</code> option allows the developer to specify in which main-branch
 <h3>Event: <code>'ready'</code></h3>
 This event runs the <code>callback</code> as soon as all calls to <code>logger[type](...data)</code>, that have been called before listening to the 'ready' event, have finished writing to the log file.
 <h3><code>logger[type].filepath</code></h3>
-The <code>filepath</code> property is internally created by <a href="https://nodejs.org/dist/latest-v12.x/docs/api/path.html#path_path_join_paths">path.join</a>(<code>dir</code>, <code>type</code>, <code>name</code>). 
+The <code>filepath</code> property is internally created by <a href="https://nodejs.org/dist/latest-v12.x/docs/api/path.html#path_path_join_paths">path.join</a>(<code>dir</code>, <code>type</code>, <code>name</code>). Overwriting this property does not break the code, however it might break yours.
 <h3><code>logger[type].once(event, callback)</code></h3>
 <ul>
     <li><code>event</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
