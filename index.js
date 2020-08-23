@@ -25,8 +25,8 @@ class Logger {
                     if (_this instanceof Logger) return _this;
                     else throw new TypeError("extend may only have Loggers");
                 });
-                this.filepath = log.filepath = path.join(this.dirpath, name + ".log");
-                this.writable = fs.createWriteStream(this.filepath, { flags: "a+" });
+                log.filepath = path.join(this.dirpath, name + ".log");
+                this.writable = fs.createWriteStream(log.filepath, { flags: "a+" });
                 this.chain = [new Promise(resolve => this.writable.once("open", () => resolve()))];
                 log.once = this.once;
                 log.setName = this.setName;
