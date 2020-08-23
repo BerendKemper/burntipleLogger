@@ -51,12 +51,12 @@ The <code>dir</code> option allows the developer to specify in which main-branch
     // returns:
     // {
     //     log: [Function: log] {
-    //         filepath: 'loggers\\log\\2020-08-22.log',
+    //         filepath: 'loggers\\log\\monkey.log',
     //         once: [Function],
     //         setName: [Function]
     //     },
     //     error: [Function: log] {
-    //         filepath: 'loggers\\error\\2020-08-22.log',
+    //         filepath: 'loggers\\error\\monkey.log',
     //         once: [Function],
     //         setName: [Function]
     //     }
