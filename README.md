@@ -5,19 +5,19 @@ A logger that creates a log-dir and can change the logger filename, allows forma
 const { Logger, logger } = require("monkey-logger");</code></pre>
 <h3>Table of Contents</h3>
 <ul>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#class-logger">Class: Logger</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#class-logger">Class: Logger</a></li>
     <ul>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
     </ul>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#logger">logger</a></li>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#loggertype">logger[type]</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#logger">logger</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
     <ul>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#event-ready">Event: 'ready'</a></li>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#loggertypefilepath">logger[type].filepath</a></li>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#loggertypeonceevent-callback">logger[type].once(event, callback)</a></li>
-        <li><a href="https://github.com/BerendKemper/monkey-logger#loggertypesetnamename">logger[type].setName(name)</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#event-ready">Event: 'ready'</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypefilepath">logger[type].filepath</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypeonceevent-callback">logger[type].once(event, callback)</a></li>
+        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypesetnamename">logger[type].setName(name)</a></li>
     </ul>
-    <li><a href="https://github.com/BerendKemper/monkey-logger#example">Example</a></li>
+    <li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
 </ul>
 <h2>Class: <code>Logger</code></h2>
 <h3><code>new Logger(type[,options])</code></h3>

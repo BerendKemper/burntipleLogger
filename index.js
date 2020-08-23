@@ -47,14 +47,14 @@ class Logger {
                 xChain.shift(x.writable.write(logBuffer, () => resolve())))));
         }
     }
-    events = {
+    listeners = {
         ready: callback => this.chain[this.chain.length - 1].then(() => callback())
     }
     once = (event, callback) => {
-        if (this.events[event]) {
+        if (this.listeners[event]) {
             if (typeof callback !== "function")
                 throw new TypeError("listener must be a function");
-            this.events[event](callback);
+            this.listeners[event](callback);
         }
     }
     setName = name => {
