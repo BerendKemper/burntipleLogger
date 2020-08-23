@@ -58,13 +58,13 @@ class Logger {
         }
     }
     setName = name => {
-        const newFilepath = path.join(this.dirpath, name + ".log");
-        const newWritable = fs.createWriteStream(newFilepath, { flags: "a+" });
+        const filepath = this.log.filepath = path.join(this.dirpath, name + ".log");
+        const newWritable = fs.createWriteStream(filepath, { flags: "a+" });
         const chain = this.chain;
         chain.push(new Promise(resolve => {
             const newOpened = new Promise(resolve => newWritable.once("open", () => resolve()));
             chain[chain.length - 1].then(() => chain.shift(newOpened.then(() =>
-                resolve(this.writable = newWritable, this.log.filepath = newFilepath)
+                resolve(this.writable = newWritable)
             )));
         }));
     }

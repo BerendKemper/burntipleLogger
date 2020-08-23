@@ -65,6 +65,17 @@ The <code>dir</code> option allows the developer to specify in which main-branch
 <h2><code>logger[type]</code></h2>
 <h3>Event: <code>'ready'</code></h3>
 This event runs the <code>callback</code> as soon as all calls to <code>logger[type](...data)</code>, that have been called before listening to the 'ready' event, have finished writing to the log file.
+<pre><code>(async function loadApplication() {
+    const { Logger, logger } = require("monkey-logger");
+    // ...
+    await new Logger("log");
+    await new Logger("error", { extend: [logger.log] });
+    // ...
+    process.on("SIGINT", () => {
+        logger.error("Node JS is now shutting down due to ctrl + c");
+        logger.error.on("ready", () => process.exit());
+    });
+}());</code></pre>
 <h3><code>logger[type].filepath</code></h3>
 The <code>filepath</code> property is internally created by <a href="https://nodejs.org/dist/latest-v12.x/docs/api/path.html#path_path_join_paths">path.join</a>(<code>dir</code>, <code>type</code>, <code>name</code>). Overwriting this property does not break the code, however it might break yours.
 <h3><code>logger[type].once(event, callback)</code></h3>
@@ -78,8 +89,24 @@ Adds a one-time <code>callback</code> function for the <code>event</code>.
     <li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
 </ul>
 This method adds the new <code>name</code> to the <code>filepath</code> property and creates a new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_fs_createwritestream_path_options">fs.createWriteStream</a>. The internal <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> will only be overwritten by the new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> until all previous logs have finished writing. Any logs that have been fired after the <code>setName</code> method was called will only start writing once the new <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_class_fs_writestream">WriteStream</a> is <a href="https://nodejs.org/dist/latest-v12.x/docs/api/fs.html#fs_event_ready_1">ready</a>.
-<h3>delete(logger[type])</h3>
+<h3><code>delete(logger[type])</code></h3>
 Deleting a <code>type</code> from the <code>logger</code> Object also causes the <code>Logger</code> instance to be removed from the internal WeakMap. Caution: if there was still a reference to <code>logger[type]</code>, <code>delete(logger[type])</code> will only remove the <code>type</code> from the <code>logger</code> Object, but will fail at removing the <code>Logger</code> instance from the internal WeakMap until the reference to <code>logger[type]</code> is gone.
+<pre><code>(async function loadApplication() {
+    const { Logger, logger } = require("monkey-logger");
+    // ...
+    await new Logger("noob");
+    console.log(logger);
+    // {
+    //     noob: [Function: log] {
+    //         filepath: 'loggers\\noob\\monkey.log',
+    //         once: [Function],
+    //         setName: [Function]
+    //     },
+    // }
+    delete(logger.noob);
+    console.log(logger);
+    // {}
+}());</code></pre>
 <h2>Example</h2>
 <pre><code>(async function loadApplication() {
     const { Logger, logger } = require("monkey-logger");
@@ -108,26 +135,25 @@ Deleting a <code>type</code> from the <code>logger</code> Object also causes the
     logger.log("CLOSED", "/v1/someapi/mongol/1", "spider", "monkey");
     logger.error("FAILED", "/v1/someapi/mongol/1", "find errors in " + logger.error.filepath, "monkey!");
     logger.error("FAILED", "/v1/someapi/mongol/2", "find errors in " + logger.error.filepath, "monkey!");
-    logger.log.setName("test")
+    logger.log.setName("test");
+    logger.error.setName("noob");
     logger.error("FAILED", "/v1/someapi/mongol/3", "find errors in " + logger.error.filepath, "monkey!");
     logger.log("GET", "/v1/someapi/mongol/2", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol/2", "spider", "monkey");
-    logger.log.once("ready", () => console.log("done writing..."));
     // ...
     // 2020-08-15T21:26:19.824+0200       GET       /v1/someapi/mongol/1     spider    monkey
     // 2020-08-15T21:26:19.836+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
     // 2020-08-15T21:26:19.837+0200       FAILED    /v1/someapi/mongol/1     find errors in loggers\error\2020-08-15.log       monkey!
     // 2020-08-15T21:26:19.838+0200       FAILED    /v1/someapi/mongol/2     find errors in loggers\error\2020-08-15.log       monkey!
-    // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\2020-08-15.log       monkey!
+    // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\noob.log        monkey!
     // 2020-08-15T21:26:19.839+0200       GET       /v1/someapi/mongol/2     spider    monkey
     // 2020-08-15T21:26:19.840+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
-    // done writing...
     // ...
     // 1st OUTPUT: /loggers/log/2020-08-16.log
     // 2nd OUTPUT: /loggers/log/2020-08-16.log
     // 3rd OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
     // 4th OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
-    // 5th OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/test.log
+    // 5th OUTPUT: /loggers/error/noob.log + OUTPUT: /loggers/log/test.log
     // 6th OUTPUT: /loggers/log/test.log
     // 7th OUTPUT: /loggers/log/test.log
 }());</code></pre>
