@@ -32,7 +32,7 @@ class Logger {
                 log.setName = this.setName;
                 instance.set(log, this);
                 logger[type] = log;
-                resolve(log);
+                resolve();
             });
         });
     }
