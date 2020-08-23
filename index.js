@@ -53,7 +53,7 @@ class Logger {
     once = (event, callback) => {
         if (this.listeners[event]) {
             if (typeof callback !== "function")
-                throw new TypeError("listener must be a function");
+                throw new TypeError("callback must be a function");
             this.listeners[event](callback);
         }
     }
