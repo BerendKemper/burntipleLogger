@@ -67,7 +67,7 @@ class Logger {
                 resolve(this.writable = newWritable);
                 if (this.autoRemoveEmpty !== false) setTimeout(() => fs.readFile(oldFilepath, { flag: 'r' }, (err, data) => {
                     if (err === null && data.length === 0) fs.unlinkSync(oldFilepath);
-                }), 333);
+                }), 1000);
             })));
         }));
     }
