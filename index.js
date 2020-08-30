@@ -1,8 +1,21 @@
 "use strict";
-const path = require("path");
-const fs = require("fs");
-const instance = new WeakMap();
 const logger = {};
+const fs = require("fs");
+const path = require("path");
+const instance = new WeakMap();
+const onReady = Symbol("onReady");
+const listeners = { 'ready': onReady };
+const getInstance = logger => {
+    let _this = instance.get(logger);
+    if (_this) return _this;
+    else throw new TypeError("extend may only have Loggers");
+};
+const extendLoggers = loggers => {
+    const extending = new Array(loggers.length);
+    for (let x = 0; x < extending.length; ++x)
+        extending[x] = getInstance(loggers[x]);
+    return extending;
+};
 class Logger {
     /**Creates logger[type]
      * @param {string} type
@@ -16,26 +29,22 @@ class Logger {
         this.dirpath = path.join(dir, type);
         return new Promise((resolve, reject) => {
             fs.mkdir(this.dirpath, { recursive: true }, err => {
-                if (instance.get(logger[type]) instanceof Logger)
+                if (instance.get(logger[type]))
                     reject(Error(type + " Logger already exists"));
-                const log = this.log = logger[type] = (...data) => formatter(data, this.logString);
-                this.extended = extend.map(loggerType => {
-                    const _this = instance.get(loggerType);
-                    if (_this instanceof Logger) return _this;
-                    else throw new TypeError("extend may only have Loggers");
-                });
+                const log = this.log = logger[type] = (...data) => formatter(data, logString => this.logString(logString));
+                this.extended = extend.length === 0 ? extend : extend.length === 1 ? [getInstance(extend[0])] : extendLoggers(extend);
                 this.autoRemoveEmpty = autoRemoveEmpty;
                 log.filepath = path.join(this.dirpath, name + ".log");
                 this.writable = fs.createWriteStream(log.filepath, { flags: "a+" });
                 this.chain = [new Promise(resolve => this.writable.once("open", () => resolve()))];
-                log.once = this.once;
-                log.setName = this.setName;
+                log.once = (event, callback) => this.once(event, callback);
+                log.setName = (name) => this.setName(name);
                 instance.set(log, this);
                 resolve();
             });
         });
     }
-    logString = logString => {
+    logString(logString) {
         const logBuffer = Buffer.from(logString + "\n", "utf8");
         const chain = this.chain;
         chain.push(new Promise(resolve => chain[chain.length - 1].then(() =>
@@ -46,17 +55,17 @@ class Logger {
                 xChain.shift(x.writable.write(logBuffer, () => resolve())))));
         }
     }
-    listeners = {
-        ready: callback => this.chain[this.chain.length - 1].then(() => callback())
+    [onReady](callback) {
+        this.chain[this.chain.length - 1].then(() => callback());
     }
-    once = (event, callback) => {
-        if (this.listeners[event]) {
+    once(event, callback) {
+        if (this[listeners[event]]) {
             if (typeof callback !== "function")
                 throw new TypeError("callback must be a function");
-            this.listeners[event](callback);
+            this[listeners[event]](callback);
         }
     }
-    setName = name => {
+    setName(name) {
         const oldFilepath = this.log.filepath;
         const filepath = this.log.filepath = path.join(this.dirpath, name + ".log");
         const newWritable = fs.createWriteStream(filepath, { flags: "a+" });
@@ -72,4 +81,5 @@ class Logger {
         }));
     }
 };
+Object.freeze(Logger.prototype);
 module.exports = Object.freeze({ Logger, logger });

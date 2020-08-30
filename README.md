@@ -137,24 +137,27 @@ Deleting a <code>type</code> from the <code>logger</code> Object also causes the
     logger.error("FAILED", "/v1/someapi/mongol/1", "find errors in " + logger.error.filepath, "monkey!");
     logger.error("FAILED", "/v1/someapi/mongol/2", "find errors in " + logger.error.filepath, "monkey!");
     logger.log.setName("test");
-    logger.error.setName("noob");
+    logger.error.setName("noob"); // is empty so auto removed
+    logger.error.setName("mongol"); // is empty so auto removed
+    logger.error.setName("monkey");
     logger.error("FAILED", "/v1/someapi/mongol/3", "find errors in " + logger.error.filepath, "monkey!");
     logger.log("GET", "/v1/someapi/mongol/2", "spider", "monkey");
     logger.log("CLOSED", "/v1/someapi/mongol/2", "spider", "monkey");
     // ...
-    // 2020-08-15T21:26:19.824+0200       GET       /v1/someapi/mongol/1     spider    monkey
-    // 2020-08-15T21:26:19.836+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
-    // 2020-08-15T21:26:19.837+0200       FAILED    /v1/someapi/mongol/1     find errors in loggers\error\2020-08-15.log       monkey!
-    // 2020-08-15T21:26:19.838+0200       FAILED    /v1/someapi/mongol/2     find errors in loggers\error\2020-08-15.log       monkey!
-    // 2020-08-15T21:26:19.839+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\noob.log        monkey!
-    // 2020-08-15T21:26:19.839+0200       GET       /v1/someapi/mongol/2     spider    monkey
-    // 2020-08-15T21:26:19.840+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
+    // 2020-08-30T21:46:16.143+0200       GET       /v1/someapi/mongol/1     spider    monkey
+    // 2020-08-30T21:46:16.150+0200       CLOSED    /v1/someapi/mongol/1     spider    monkey
+    // 2020-08-30T21:46:16.151+0200       FAILED    /v1/someapi/mongol/1     find errors in loggers\error\2020-08-30.log       monkey!
+    // 2020-08-30T21:46:16.153+0200       FAILED    /v1/someapi/mongol/2     find errors in loggers\error\2020-08-30.log       monkey!
+    // 2020-08-30T21:46:16.155+0200       FAILED    /v1/someapi/mongol/3     find errors in loggers\error\noob.log        monkey!
+    // 2020-08-30T21:46:16.156+0200       GET       /v1/someapi/mongol/2     spider    monkey
+    // 2020-08-30T21:46:16.157+0200       CLOSED    /v1/someapi/mongol/2     spider    monkey
+    // 2020-08-30T19:46:16.158Z done
     // ...
-    // 1st OUTPUT: /loggers/log/2020-08-16.log
-    // 2nd OUTPUT: /loggers/log/2020-08-16.log
-    // 3rd OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
-    // 4th OUTPUT: /loggers/error/2020-08-16.log + OUTPUT: /loggers/log/2020-08-16.log
-    // 5th OUTPUT: /loggers/error/noob.log + OUTPUT: /loggers/log/test.log
+    // 1st OUTPUT: /loggers/log/2020-08-30.log
+    // 2nd OUTPUT: /loggers/log/2020-08-30.log
+    // 3rd OUTPUT: /loggers/error/2020-08-30.log + OUTPUT: /loggers/log/2020-08-30.log
+    // 4th OUTPUT: /loggers/error/2020-08-30.log + OUTPUT: /loggers/log/2020-08-30.log
+    // 5th OUTPUT: /loggers/error/monkey.log + OUTPUT: /loggers/log/test.log
     // 6th OUTPUT: /loggers/log/test.log
     // 7th OUTPUT: /loggers/log/test.log
 }());</code></pre>

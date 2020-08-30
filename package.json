@@ -1,9 +1,8 @@
 {
     "name": "monkey-logger",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "A logger that creates a log-dir, that may change the logger's filename, that may use a formatter and that allows and extending various logger types",
     "main": "index.js",
-    "scripts": {},
     "repository": {
         "type": "git",
         "url": "git+https://github.com/BerendKemper/monkey-logger.git"
