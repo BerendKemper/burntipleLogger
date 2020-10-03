@@ -5,40 +5,40 @@ A logger that creates a log-dir, that may change the logger's filename, that may
 const { Logger, logger } = require("monkey-logger");</code></pre>
 <h3>Table of Contents</h3>
 <ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#class-logger">Class: Logger</a></li>
-    <ul>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
-    </ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#logger">logger</a></li>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
-    <ul>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#event-ready">Event: 'ready'</a></li>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypefilepath">logger[type].filepath</a></li>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypeonceevent-callback">logger[type].once(event, callback)</a></li>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#loggertypesetnamename">logger[type].setName(name)</a></li>
-        <li><a href="https://www.npmjs.com/package/monkey-logger#deleteloggertype">delete(logger[type])</a></li>
-    </ul>
-    <li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
+	<li><a href="https://www.npmjs.com/package/monkey-logger#class-logger">Class: Logger</a></li>
+	<ul>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#new-loggertypeoptions">new Logger(type[,options])</a></li>
+	</ul>
+	<li><a href="https://www.npmjs.com/package/monkey-logger#logger">logger</a></li>
+	<li><a href="https://www.npmjs.com/package/monkey-logger#loggertype">logger[type]</a></li>
+	<ul>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#event-ready">Event: 'ready'</a></li>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#loggertypefilepath">logger[type].filepath</a></li>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#loggertypeonceevent-callback">logger[type].once(event, callback)</a></li>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#loggertypesetnamename">logger[type].setName(name)</a></li>
+		<li><a href="https://www.npmjs.com/package/monkey-logger#deleteloggertype">delete(logger[type])</a></li>
+	</ul>
+	<li><a href="https://www.npmjs.com/package/monkey-logger#example">Example</a></li>
 </ul>
 <h2>Class: <code>Logger</code></h2>
 <h3><code>new Logger(type[,options])</code></h3>
 <ul>
-    <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
-    <li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a></li>
-    <ul>
-        <li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>loggers</code></li>
-        <li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>monkey</code></li>
-        <li><code>autoRemoveEmpty</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type">&lt;Boolean&gt;</a> Default: <code>true</code></li>
-        <li><code>formatter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Default: <code>(data, callback) => callback(data.join(" "))</code></li>
-        <ul>
-            <li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">&lt;Array&gt;</a></li>
-            <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Required!</li>
-        </ul>
-    </ul>
-    <li>Returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">&lt;Promise&gt;</a></li>
-    <ul>
-        <li>Resolves <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type">&lt;undefined&gt;</a></li>
-    </ul>
+	<li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a></li>
+	<li><code>options</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">&lt;Object&gt;</a></li>
+	<ul>
+		<li><code>dir</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>loggers</code></li>
+		<li><code>name</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type">&lt;string&gt;</a> Default: <code>monkey</code></li>
+		<li><code>autoRemoveEmpty</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type">&lt;Boolean&gt;</a> Default: <code>true</code></li>
+		<li><code>formatter</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Default: <code>(data, callback) => callback(data.join(" "))</code></li>
+		<ul>
+			<li><code>data</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">&lt;Array&gt;</a></li>
+			<li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">&lt;Function&gt;</a> Required!</li>
+		</ul>
+	</ul>
+	<li>Returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">&lt;Promise&gt;</a></li>
+	<ul>
+		<li>Resolves <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Undefined_type">&lt;undefined&gt;</a></li>
+	</ul>
 </ul>
 The <code>dir</code> option allows the developer to specify in which main-branch the logger will document it's log file(s). The <code>type</code> option  allows the developer to specify in which sub-branch the logger will document it's log file(s). It also determines how you can access the log function from the logger Object. The <code>name</code> option allows the developer to specify  how the log file will be named.The <code>autoRemoveEmpty</code> option automatically removes a log file when the <code>name</code> has been changed by <code>setName</code> and if the content is empty, unless set to <code>false</code>. The <code>formatter</code> is a function that allows the developer to manipulate the log string into desired format, the function's second parameter <code>callback</code> must be used to pass through the self-formatted string. The <code>extend</code> option allows the developer to extend a logger[type2] with a logger[type1] so that logger[type2] will also log it's data to the log file from logger[type1]. Checkout out the example below to see how multiple modules with callbacks can be chained in a formatter function and to see how logger.error is extended from logger.log. 
 <h2><code>logger</code></h2>
