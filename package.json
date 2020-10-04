@@ -10,7 +10,8 @@
 	"keywords": [],
 	"author": {
 		"name": "Berend Kemper",
-		"email": "berend_kemper@hotmail.com"
+		"email": "berend_kemper@hotmail.com",
+		"npmjs": "https://www.npmjs.com/~burndkemper"
 	},
 	"license": "MIT",
 	"bugs": {
